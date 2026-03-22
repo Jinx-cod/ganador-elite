@@ -36,8 +36,16 @@ body { background: #000; color: white; overflow: hidden; height: 100vh; }
 }
 
 #splash-img {
-    width: 280px; /* Adjust size of the G logo */
-    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+    width: 300px; /* Slightly larger for that "G" impact */
+    height: auto;
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 /* REVEAL ACTION */
