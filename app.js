@@ -29,12 +29,40 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 2500);
 });
 
-// 4. Placeholder for the Sign-In Function
-// We will build the full logic for this once we have the UI inputs ready!
+// 4. Real Sign-In Logic
 const loginForm = document.getElementById('login-form');
+
 if(loginForm) {
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        console.log("Elite Login Attempted...");
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const btn = e.target.querySelector('button');
+
+        // Visual feedback: Dim the button while loading
+        btn.innerText = "VERIFYING...";
+        btn.style.opacity = "0.5";
+
+        try {
+            // This is the magic line that talks to Firebase
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            
+            console.log("Welcome, Ganador:", user.email);
+            
+            // Success! Fade out the login card
+            document.querySelector('.login-card').style.opacity = "0";
+            setTimeout(() => {
+                alert("Welcome to the Elite. Access Granted.");
+                // Here is where we will load the main dashboard next
+            }, 500);
+
+        } catch (error) {
+            console.error("Login Failed:", error.message);
+            alert("Access Denied: Please check your credentials.");
+            btn.innerText = "SIGN IN";
+            btn.style.opacity = "1";
+        }
     });
 }
